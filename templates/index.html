@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Azure AI Infra Agent</title>
+</head>
+
+<body>
+
+<h2>Azure Operations Assistant</h2>
+
+<div id="chat"></div>
+
+<input id="msg" placeholder="Ask something..." />
+<button onclick="send()">Send</button>
+
+<script>
+
+async function send(){
+
+    const message = document.getElementById("msg").value
+
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: message})
+    })
+
+    const data = await response.json()
+
+    document.getElementById("chat").innerHTML +=
+        "<p><b>You:</b> " + message + "</p>" +
+        "<p><b>AI:</b> " + data.response + "</p>"
+}
+
+</script>
+
+</body>
+</html>
