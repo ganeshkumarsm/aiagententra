@@ -27,6 +27,14 @@ def chat():
 
     return jsonify({"response": answer})
 
+@app.route("/debug")
+def debug():
+
+    groups = get_user_groups()
+
+    return {
+        "groups": groups
+    }
 
 if __name__ == "__main__":
     app.run()
