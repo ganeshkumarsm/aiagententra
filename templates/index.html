@@ -1,38 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azure AI Infra Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
 </head>
-
 <body>
+    <div class="page-shell">
+        <div class="background-grid" aria-hidden="true"></div>
 
-<h2>Azure Operations Assistant</h2>
+        <main class="app-shell">
+            <section class="hero-panel">
+                <span class="eyebrow">Enterprise AI Operations</span>
+                <h1>Azure Operations Assistant</h1>
+                <p class="hero-copy">
+                    Support your infrastructure and identity workflows with a focused AI copilot
+                    designed for Microsoft Entra and Azure operations teams.
+                </p>
 
-<div id="chat"></div>
+                <div class="hero-metrics">
+                    <div class="metric-card">
+                        <span class="metric-label">Use Cases</span>
+                        <strong>Access reviews, audits, permissions</strong>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Experience</span>
+                        <strong>Natural-language operational support</strong>
+                    </div>
+                </div>
+            </section>
 
-<input id="msg" placeholder="Ask something..." />
-<button onclick="send()">Send</button>
+            <section class="chat-panel">
+                <div class="chat-header">
+                    <div>
+                        <p class="section-label">Assistant Console</p>
+                        <h2>Ask a question</h2>
+                    </div>
+                    <span class="status-pill" id="status-pill">Ready</span>
+                </div>
 
-<script>
+                <div id="chat" class="chat-thread" aria-live="polite">
+                    <article class="message assistant">
+                        <div class="message-role">Assistant</div>
+                        <p>
+                            Ask about access posture, operational actions, user permissions, or Azure
+                            administration tasks to get started.
+                        </p>
+                    </article>
+                </div>
 
-async function send(){
+                <form id="chat-form" class="composer" novalidate>
+                    <label class="sr-only" for="msg">Message</label>
+                    <textarea
+                        id="msg"
+                        name="message"
+                        rows="3"
+                        placeholder="Example: Summarize this user's Entra permissions and recent access risks."
+                    ></textarea>
+                    <div class="composer-footer">
+                        <p class="composer-hint">Press Enter to send. Use Shift+Enter for a new line.</p>
+                        <button id="send-button" type="submit">Send Message</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
 
-    const message = document.getElementById("msg").value
-
-    const response = await fetch("/chat", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({message: message})
-    })
-
-    const data = await response.json()
-
-    document.getElementById("chat").innerHTML +=
-        "<p><b>You:</b> " + message + "</p>" +
-        "<p><b>AI:</b> " + data.response + "</p>"
-}
-
-</script>
-
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
